@@ -8,11 +8,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "lancamento", schema = "financas")
+@Table(name = "lancamento", schema = "chamados")
 @Builder
 @Data
 @NoArgsConstructor
@@ -29,11 +28,11 @@ public class Lancamento {
     private Integer mes;
     @Column(name = "ano")
     private Integer ano;
+    @Column(name = "setor")
+    private String setor;
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @Column(name = "valor")
-    private BigDecimal valor;
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro;
     @Column(name = "tipo")
