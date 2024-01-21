@@ -89,6 +89,9 @@ public class LancamentoServiceImpl implements LancamentoService {
         if (lancamento.getTipo() == null) {
             throw new RegraNegocioException("Informe um tipo de Lançamento!");
         }
+//        if(lancamento.getDataCadastro() == null  || lancamento.getDataCadastro().equals("")){
+//            throw new RegraNegocioException("Informe a data do cadastro.!");
+//        }
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.idace.idacechamados.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.idace.idacechamados.model.enums.StatusLancamento;
 import com.idace.idacechamados.model.enums.TipoLancamento;
 import lombok.AllArgsConstructor;
