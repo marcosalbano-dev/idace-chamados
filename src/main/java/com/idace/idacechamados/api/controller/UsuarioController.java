@@ -4,14 +4,15 @@ import com.idace.idacechamados.api.dto.UsuarioDTO;
 import com.idace.idacechamados.exception.ErroAutenticacao;
 import com.idace.idacechamados.exception.RegraNegocioException;
 import com.idace.idacechamados.model.entity.Usuario;
+import com.idace.idacechamados.service.LancamentoService;
 import com.idace.idacechamados.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UsuarioController {
 
     private final UsuarioService service;
+    private final LancamentoService lancamentoService;
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody UsuarioDTO dto) {
@@ -45,4 +47,17 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+//    @GetMapping("{id}/lancamentos-atendidos")
+//    public ResponseEntity obterLancamentos(@PathVariable("id") Long id){
+//        Optional<Usuario> usuario = service.obterPorId(id);
+//
+//        if(!usuario.isPresent()){
+//            return new ResponseEntity(HttpStatus.NOT_FOUND);
+//        }
+////        Integer totalLancamentos = lancamentoService.obterLancamentosPorTipoEPorUsuario();
+////        return ResponseEntity.ok(totalLancamentos);
+//    }
+
+
 }

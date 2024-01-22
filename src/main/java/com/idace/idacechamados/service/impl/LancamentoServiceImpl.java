@@ -3,6 +3,7 @@ package com.idace.idacechamados.service.impl;
 import com.idace.idacechamados.exception.RegraNegocioException;
 import com.idace.idacechamados.model.entity.Lancamento;
 import com.idace.idacechamados.model.enums.StatusLancamento;
+import com.idace.idacechamados.model.enums.TipoLancamento;
 import com.idace.idacechamados.model.repository.LancamentoRepository;
 import com.idace.idacechamados.service.LancamentoService;
 import org.springframework.data.domain.Example;
@@ -72,22 +73,22 @@ public class LancamentoServiceImpl implements LancamentoService {
     @Override
     public void validar(Lancamento lancamento) {
         if (lancamento.getDescricao() == null || lancamento.getDescricao().trim() == "") {
-            throw new RegraNegocioException("Informe uma Descrição válida!");
+            throw new RegraNegocioException("Informe uma Descrição válida.");
         }
         if (lancamento.getMes() == null || lancamento.getMes() < 1 || lancamento.getMes() > 12) {
-            throw new RegraNegocioException("Informe um Mês válido!");
+            throw new RegraNegocioException("Informe um Mês válido.");
         }
         if (lancamento.getAno() == null || lancamento.getAno().toString().length() != 4) {
-            throw new RegraNegocioException("Informe um Ano válido!");
+            throw new RegraNegocioException("Informe um Ano válido.");
         }
         if (lancamento.getUsuario() == null || lancamento.getUsuario().getId() == null) {
-            throw new RegraNegocioException("Informe um Usuário!");
+            throw new RegraNegocioException("Informe um Usuário.");
         }
         if (lancamento.getSetor() == null || lancamento.getSetor().trim() == "") {
-            throw new RegraNegocioException("Informe um Setor válido!");
+            throw new RegraNegocioException("Informe um Setor válido.");
         }
         if (lancamento.getTipo() == null) {
-            throw new RegraNegocioException("Informe um tipo de Lançamento!");
+            throw new RegraNegocioException("Informe um tipo de Lançamento válido.");
         }
 //        if(lancamento.getDataCadastro() == null  || lancamento.getDataCadastro().equals("")){
 //            throw new RegraNegocioException("Informe a data do cadastro.!");
@@ -98,4 +99,5 @@ public class LancamentoServiceImpl implements LancamentoService {
     public Optional<Lancamento> obterPorId(Long id) {
         return repository.findById(id);
     }
+
 }
