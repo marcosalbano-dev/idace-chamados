@@ -1,5 +1,6 @@
 package com.idace.idacechamados.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.idace.idacechamados.model.enums.StatusLancamento;
 import com.idace.idacechamados.model.enums.TipoLancamento;
 import lombok.AllArgsConstructor;
@@ -8,7 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
@@ -29,11 +29,11 @@ public class Lancamento {
     private Integer mes;
     @Column(name = "ano")
     private Integer ano;
+    @Column(name = "setor")
+    private String setor;
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @Column(name = "valor")
-    private BigDecimal valor;
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro;
     @Column(name = "tipo")
