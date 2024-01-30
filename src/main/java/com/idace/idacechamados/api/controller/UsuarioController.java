@@ -48,16 +48,16 @@ public class UsuarioController {
         }
     }
 
-//    @GetMapping("{id}/lancamentos-atendidos")
-//    public ResponseEntity obterLancamentos(@PathVariable("id") Long id){
-//        Optional<Usuario> usuario = service.obterPorId(id);
-//
-//        if(!usuario.isPresent()){
-//            return new ResponseEntity(HttpStatus.NOT_FOUND);
-//        }
-////        Integer totalLancamentos = lancamentoService.obterLancamentosPorTipoEPorUsuario();
-////        return ResponseEntity.ok(totalLancamentos);
-//    }
+    @GetMapping("{id}/lancamentos-atendidos")
+    public ResponseEntity obterLancamentos(@PathVariable("id") Long id){
+        Optional<Usuario> usuario = service.obterPorId(id);
+
+        if(!usuario.isPresent()){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        Integer totalLancamentos = lancamentoService.obterLancamentosPorTipoEPorUsuario(id);
+        return ResponseEntity.ok(totalLancamentos);
+    }
 
 
 }

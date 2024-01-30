@@ -100,4 +100,26 @@ public class LancamentoServiceImpl implements LancamentoService {
         return repository.findById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Integer obterLancamentosPorTipoEPorUsuario(Long id) {
+
+        Integer totalAtendidosSuporte = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.SUPORTE, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosRede = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.REDE, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosDesenvolvimento = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.DESENVOLVIMENTO, StatusLancamento.ATENDIDO);
+
+        Integer totalAtendimentos;
+
+        if(totalAtendidosSuporte == null){
+            totalAtendidosSuporte = 0;
+        }
+        if(totalAtendidosDesenvolvimento == null){
+            totalAtendidosDesenvolvimento = 0;
+        }
+        if(totalAtendidosRede == null){
+            totalAtendidosRede = 0;
+        }
+        totalAtendimentos = totalAtendidosSuporte + totalAtendidosRede + totalAtendidosDesenvolvimento;
+        return totalAtendimentos;
+    }
 }
