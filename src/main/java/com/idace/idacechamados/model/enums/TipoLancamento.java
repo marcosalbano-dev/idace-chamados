@@ -1,8 +1,11 @@
 package com.idace.idacechamados.model.enums;
 
 public enum TipoLancamento {
-    DESENVOLVIMENTO,
+    SIGA,
+    TITULA,
+    EMAIL,
+    REDE,
+    RELATORIOS,
     SUPORTE,
-    REDE
-
+    TOPODATUM
 }

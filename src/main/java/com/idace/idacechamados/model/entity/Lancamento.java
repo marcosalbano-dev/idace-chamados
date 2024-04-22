@@ -34,6 +34,7 @@ public class Lancamento {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro;
     @Column(name = "tipo")

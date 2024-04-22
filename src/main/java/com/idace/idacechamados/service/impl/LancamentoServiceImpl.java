@@ -104,22 +104,45 @@ public class LancamentoServiceImpl implements LancamentoService {
     @Transactional(readOnly = true)
     public Integer obterLancamentosPorTipoEPorUsuario(Long id) {
 
-        Integer totalAtendidosSuporte = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.SUPORTE, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosSiga = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.SIGA, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosEmail = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.EMAIL, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosTitula = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.TITULA, StatusLancamento.ATENDIDO);
         Integer totalAtendidosRede = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.REDE, StatusLancamento.ATENDIDO);
-        Integer totalAtendidosDesenvolvimento = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.DESENVOLVIMENTO, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosRelatorios = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.RELATORIOS, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosSuporte = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.SUPORTE, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosTopodatum = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.TOPODATUM, StatusLancamento.ATENDIDO);
 
         Integer totalAtendimentos;
+
+        if(totalAtendidosSiga == null){
+            totalAtendidosSiga = 0;
+        }
+
+        if(totalAtendidosEmail == null){
+            totalAtendidosEmail = 0;
+        }
+
+        if(totalAtendidosTitula == null){
+            totalAtendidosTitula = 0;
+        }
+
+        if(totalAtendidosRede == null){
+            totalAtendidosRede = 0;
+        }
+
+        if(totalAtendidosRelatorios == null){
+            totalAtendidosRelatorios = 0;
+        }
 
         if(totalAtendidosSuporte == null){
             totalAtendidosSuporte = 0;
         }
-        if(totalAtendidosDesenvolvimento == null){
-            totalAtendidosDesenvolvimento = 0;
+
+        if(totalAtendidosTopodatum == null){
+            totalAtendidosTopodatum = 0;
         }
-        if(totalAtendidosRede == null){
-            totalAtendidosRede = 0;
-        }
-        totalAtendimentos = totalAtendidosSuporte + totalAtendidosRede + totalAtendidosDesenvolvimento;
+
+        totalAtendimentos = totalAtendidosSiga + totalAtendidosEmail + totalAtendidosTitula + totalAtendidosRede + totalAtendidosRelatorios + totalAtendidosSuporte + totalAtendidosTopodatum;
         return totalAtendimentos;
     }
 }

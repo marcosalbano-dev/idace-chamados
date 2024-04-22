@@ -121,6 +121,7 @@ public class LancamentoController {
         lancamento.setAno(dto.getAno());
         lancamento.setMes(dto.getMes());
         lancamento.setSetor(dto.getSetor());
+        lancamento.setDataCadastro(dto.getDataCadastro());
 
         Usuario usuario = usuarioService
                 .obterPorId(dto.getUsuario())
