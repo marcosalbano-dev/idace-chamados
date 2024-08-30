@@ -10,6 +10,8 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,6 +51,11 @@ public class LancamentoServiceImpl implements LancamentoService {
         repository.delete(lancamento);
     }
 
+    public String formatarData(LocalDate data) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return data.format(formatter);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
@@ -72,10 +79,10 @@ public class LancamentoServiceImpl implements LancamentoService {
 
     @Override
     public void validar(Lancamento lancamento) {
-        if (lancamento.getDescricao() == null || lancamento.getDescricao().trim() == "") {
+        if (lancamento.getDescricao() == null || lancamento.getDescricao().trim().equals("")) {
             throw new RegraNegocioException("Informe uma Descrição válida.");
         }
-        if (lancamento.getMes() == null || lancamento.getMes() < 1 || lancamento.getMes() > 12) {
+        if (lancamento.getMes() == null || lancamento.getMes().trim().equals("")) {
             throw new RegraNegocioException("Informe um Mês válido.");
         }
         if (lancamento.getAno() == null || lancamento.getAno().toString().length() != 4) {
@@ -84,15 +91,15 @@ public class LancamentoServiceImpl implements LancamentoService {
         if (lancamento.getUsuario() == null || lancamento.getUsuario().getId() == null) {
             throw new RegraNegocioException("Informe um Usuário.");
         }
-        if (lancamento.getSetor() == null || lancamento.getSetor().trim() == "") {
+        if (lancamento.getSetor() == null || lancamento.getSetor().trim().equals("")) {
             throw new RegraNegocioException("Informe um Setor válido.");
         }
         if (lancamento.getTipo() == null) {
             throw new RegraNegocioException("Informe um tipo de Lançamento válido.");
         }
-//        if(lancamento.getDataCadastro() == null  || lancamento.getDataCadastro().equals("")){
-//            throw new RegraNegocioException("Informe a data do cadastro.!");
-//        }
+        //if(lancamento.getDataCadastro() == null  || lancamento.getDataCadastro().equals("")){
+          //  throw new RegraNegocioException("Informe a data do cadastro.!");
+       // }
     }
 
     @Override

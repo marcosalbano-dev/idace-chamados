@@ -1,8 +1,10 @@
 package com.idace.idacechamados.api.controller;
 
+import com.idace.idacechamados.api.dto.TokenDTO;
 import com.idace.idacechamados.api.dto.UsuarioDTO;
 import com.idace.idacechamados.exception.ErroAutenticacao;
 import com.idace.idacechamados.exception.RegraNegocioException;
+import com.idace.idacechamados.service.JwtService;
 import com.idace.idacechamados.model.entity.Usuario;
 import com.idace.idacechamados.service.LancamentoService;
 import com.idace.idacechamados.service.UsuarioService;
@@ -21,6 +23,7 @@ public class UsuarioController {
 
     private final UsuarioService service;
     private final LancamentoService lancamentoService;
+    private final JwtService jwtService;
 
     @PostMapping
     public ResponseEntity salvar(@RequestBody UsuarioDTO dto) {
@@ -40,9 +43,9 @@ public class UsuarioController {
     public ResponseEntity<?> autenticar(@RequestBody UsuarioDTO dto){
         try {
             Usuario usuarioAutenticado = service.autenticar(dto.getEmail(), dto.getSenha());
-//            String token = jwtService.gerarToken(usuarioAutenticado);
-//            TokenDTO tokenDTO = new TokenDTO(usuarioAutenticado.getNome(), token);
-            return ResponseEntity.ok(usuarioAutenticado);
+            String token = jwtService.gerarToken(usuarioAutenticado);
+            TokenDTO tokenDTO = new TokenDTO(usuarioAutenticado.getNome(), token);
+            return ResponseEntity.ok(tokenDTO);
         }catch (ErroAutenticacao e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
@@ -58,6 +61,4 @@ public class UsuarioController {
         Integer totalLancamentos = lancamentoService.obterLancamentosPorTipoEPorUsuario(id);
         return ResponseEntity.ok(totalLancamentos);
     }
-
-
 }

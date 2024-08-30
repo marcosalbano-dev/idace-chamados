@@ -6,6 +6,7 @@ import com.idace.idacechamados.model.entity.Usuario;
 import com.idace.idacechamados.model.repository.UsuarioRepository;
 import com.idace.idacechamados.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,10 +17,14 @@ dessa classe (cria uma instância e adiciona um container para poder injetar em 
 public class UsuarioServiceImpl implements UsuarioService {
 
     private UsuarioRepository repository;
+
+    private PasswordEncoder encoder;
+
     @Autowired
-    public UsuarioServiceImpl(UsuarioRepository repository) {
+    public UsuarioServiceImpl(UsuarioRepository repository, PasswordEncoder encoder) {
         super();
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     @Override
@@ -29,7 +34,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         if(!usuario.isPresent()){
             throw new ErroAutenticacao("Usuário não encontrado para o email informado.");
         }
-        if(!usuario.get().getSenha().equals(senha)){
+
+        boolean senhasBatem = encoder.matches(senha, usuario.get().getSenha());
+
+        if(!senhasBatem){
             throw new ErroAutenticacao("Senha inválida!");
         }
 
@@ -39,8 +47,16 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario salvarUsuario(Usuario usuario) {
         validarEmail(usuario.getEmail());
+        criptografarSenha(usuario);
         return repository.save(usuario);
     }
+
+    private void criptografarSenha(Usuario usuario) {
+        String senha = usuario.getSenha();
+        String senhaCripto = encoder.encode(senha);
+        usuario.setSenha(senhaCripto);
+    }
+
 
     @Override
     public void validarEmail(String email) {

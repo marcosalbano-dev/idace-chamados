@@ -7,9 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "lancamento", schema = "chamados")
@@ -26,7 +29,7 @@ public class Lancamento {
     @Column(name = "descricao")
     private String descricao;
     @Column(name = "mes")
-    private Integer mes;
+    private String mes;
     @Column(name = "ano")
     private Integer ano;
     @Column(name = "setor")
@@ -34,8 +37,8 @@ public class Lancamento {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuario;
-    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_cadastro")
+    @Convert(converter = Jsr310JpaConverters.LocalDateConverter.class)
     private LocalDate dataCadastro;
     @Column(name = "tipo")
     @Enumerated(value = EnumType.STRING)
@@ -43,5 +46,8 @@ public class Lancamento {
     @Column(name = "status")
     @Enumerated(value = EnumType.STRING)
     private StatusLancamento status;
+
+    @PrePersist
+    protected void onCreate() {dataCadastro = LocalDate.now().minusMonths(1);}
 
 }

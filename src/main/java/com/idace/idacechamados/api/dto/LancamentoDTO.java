@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -15,7 +13,7 @@ import java.time.LocalDate;
 public class LancamentoDTO {
     private Long id;
     private String descricao;
-    private Integer mes;
+    private String mes;
     private Integer ano;
     private String setor;
     private Long usuario;

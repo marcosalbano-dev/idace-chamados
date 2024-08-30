@@ -50,6 +50,7 @@ public class LancamentoController {
             }
         }).orElseGet(() -> new ResponseEntity("Lançamento não encontrado na base de dados!", HttpStatus.BAD_REQUEST));
     }
+
     @DeleteMapping("{id}")
     public ResponseEntity deletar(@PathVariable("id") Long id) {
         return service.obterPorId(id).map(entity -> {
@@ -61,7 +62,8 @@ public class LancamentoController {
     @GetMapping
     public ResponseEntity buscar(
             @RequestParam(value = "descricao", required = false) String descricao,
-            @RequestParam(value = "mes", required = false) Integer mes,
+            @RequestParam(value = "mes", required = false) String mes,
+            //@RequestParam(value = "tipo", required = false) TipoLancamento tipo,
             @RequestParam(value = "ano", required = false) Integer ano,
             @RequestParam(value = "setor", required = false) String setor,
             @RequestParam(value = "data_cadastro", required = false) LocalDate dataCadastro,
@@ -70,6 +72,7 @@ public class LancamentoController {
         Lancamento lancamentoFiltro = new Lancamento();
         lancamentoFiltro.setDescricao(descricao);
         lancamentoFiltro.setMes(mes);
+        //lancamentoFiltro.setTipo(tipo);
         lancamentoFiltro.setAno(ano);
         lancamentoFiltro.setSetor(setor);
         lancamentoFiltro.setDataCadastro(dataCadastro);
@@ -82,6 +85,13 @@ public class LancamentoController {
         }
         List<Lancamento> lancamentos = service.buscar(lancamentoFiltro);
         return ResponseEntity.ok(lancamentos);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity obterLancamento( @PathVariable("id") Long id ){
+        return service.obterPorId(id)
+                .map( lancamento -> new ResponseEntity(converter(lancamento), HttpStatus.OK))
+                .orElseGet( () -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("{id}/atualiza-status")
@@ -110,6 +120,7 @@ public class LancamentoController {
                 .ano(lancamento.getAno())
                 .status(lancamento.getStatus().name())
                 .tipo(lancamento.getTipo().name())
+                .dataCadastro(lancamento.getDataCadastro())
                 .usuario(lancamento.getUsuario().getId())
                 .build();
     }
