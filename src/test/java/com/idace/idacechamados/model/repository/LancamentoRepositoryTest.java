@@ -84,6 +84,7 @@
 //        return Lancamento.builder()
 //                .ano(2024)
 //                .mes("Janeiro")
+//                .mes(1)
 //                .descricao("Lançamento qualquer")
 //                .setor("NUGEO")
 //                .tipo(TipoLancamento.SUPORTE)
