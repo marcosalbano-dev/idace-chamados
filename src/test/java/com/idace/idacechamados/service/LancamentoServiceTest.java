@@ -223,6 +223,9 @@
 //        erro = catchThrowable( () -> service.validar(lancamento) );
 //        assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um Mês válido.");
 //
+
+//        lancamento.setMes("Janeiro");
+
 //        lancamento.setMes(1);
 //
 //        erro = catchThrowable( () -> service.validar(lancamento) );

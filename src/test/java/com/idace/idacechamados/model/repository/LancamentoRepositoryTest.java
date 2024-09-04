@@ -83,6 +83,7 @@
 //    public static Lancamento criarLancamento() {
 //        return Lancamento.builder()
 //                .ano(2024)
+//                .mes("Janeiro")
 //                .mes(1)
 //                .descricao("Lançamento qualquer")
 //                .setor("NUGEO")
