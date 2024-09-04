@@ -118,6 +118,7 @@ public class LancamentoServiceImpl implements LancamentoService {
         Integer totalAtendidosRelatorios = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.RELATORIOS, StatusLancamento.ATENDIDO);
         Integer totalAtendidosSuporte = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.SUPORTE, StatusLancamento.ATENDIDO);
         Integer totalAtendidosTopodatum = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.TOPODATUM, StatusLancamento.ATENDIDO);
+        Integer totalAtendidosDBAccess = repository.obterTotalLancamentosPorTipoLancamentoEUsuarioEStatus(id, TipoLancamento.BD_ACCESS, StatusLancamento.ATENDIDO);
 
         Integer totalAtendimentos;
 
@@ -149,7 +150,11 @@ public class LancamentoServiceImpl implements LancamentoService {
             totalAtendidosTopodatum = 0;
         }
 
-        totalAtendimentos = totalAtendidosSiga + totalAtendidosEmail + totalAtendidosTitula + totalAtendidosRede + totalAtendidosRelatorios + totalAtendidosSuporte + totalAtendidosTopodatum;
+        if(totalAtendidosDBAccess == null){
+            totalAtendidosDBAccess = 0;
+        }
+
+        totalAtendimentos = totalAtendidosSiga + totalAtendidosEmail + totalAtendidosTitula + totalAtendidosRede + totalAtendidosRelatorios + totalAtendidosSuporte + totalAtendidosTopodatum + totalAtendidosDBAccess;
         return totalAtendimentos;
     }
 }

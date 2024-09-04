@@ -16,6 +16,7 @@ public class LancamentoDTO {
     private String mes;
     private Integer ano;
     private String setor;
+    private String cliente;
     private Long usuario;
     private String tipo;
     private String status;

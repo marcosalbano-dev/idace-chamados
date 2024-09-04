@@ -66,6 +66,7 @@ public class LancamentoController {
             //@RequestParam(value = "tipo", required = false) TipoLancamento tipo,
             @RequestParam(value = "ano", required = false) Integer ano,
             @RequestParam(value = "setor", required = false) String setor,
+            @RequestParam(value = "cliente", required = false) String cliente,
             @RequestParam(value = "data_cadastro", required = false) LocalDate dataCadastro,
             @RequestParam(value = "usuario") Long idUsuario
     ){
@@ -75,6 +76,7 @@ public class LancamentoController {
         //lancamentoFiltro.setTipo(tipo);
         lancamentoFiltro.setAno(ano);
         lancamentoFiltro.setSetor(setor);
+        lancamentoFiltro.setCliente(cliente);
         lancamentoFiltro.setDataCadastro(dataCadastro);
 
         Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
@@ -121,6 +123,7 @@ public class LancamentoController {
                 .status(lancamento.getStatus().name())
                 .tipo(lancamento.getTipo().name())
                 .dataCadastro(lancamento.getDataCadastro())
+                .cliente(lancamento.getCliente())
                 .usuario(lancamento.getUsuario().getId())
                 .build();
     }
@@ -133,6 +136,7 @@ public class LancamentoController {
         lancamento.setMes(dto.getMes());
         lancamento.setSetor(dto.getSetor());
         lancamento.setDataCadastro(dto.getDataCadastro());
+        lancamento.setCliente(dto.getCliente());
 
         Usuario usuario = usuarioService
                 .obterPorId(dto.getUsuario())

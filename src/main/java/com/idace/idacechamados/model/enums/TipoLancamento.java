@@ -7,5 +7,6 @@ public enum TipoLancamento {
     REDE,
     RELATORIOS,
     SUPORTE,
-    TOPODATUM
+    TOPODATUM,
+    BD_ACCESS
 }
